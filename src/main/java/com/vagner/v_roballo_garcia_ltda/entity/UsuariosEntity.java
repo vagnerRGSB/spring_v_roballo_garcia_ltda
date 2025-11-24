@@ -10,40 +10,39 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import lombok.Data;
 
-@Data
+
 @Entity
-@Table(name="niveis_acessos")
-public class NiveisAcessos {
-    
+@Table(name="usuarios")
+public class UsuariosEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 60, nullable = false)
-    private String nome; // Ex: "Administrador", "Gerente"
-    
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "nome" ,length = 60, nullable = false)
+    private String nome;
+
+    @Column(name = "sobre_nome",length = 60)
+    private String sobreNome;
+
+    @Column(name="created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "deleted_at")
+    @Column(name="deleted_at")
     private LocalDateTime deletedAt;
 
-    // Gatilhos automáticos para preencher datas
     @PrePersist
-    protected void onCreate() {
+    public void onCreate(){
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
 
-    @PreUpdate
-    protected void onUpdate() {
+    @PreUpdate void onUpdate(){
         updatedAt = LocalDateTime.now();
     }
-
-
+    
 }
